@@ -1,0 +1,22 @@
+.img-poke {
+  width: 200px;
+  height: 200px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+/*#pokemon-adversaire img {
+  transform: rotateY(180deg);
+}*/
+
+.poke-mort {
+  /*filter: blur(5px);*/
+  filter: grayscale(80%);
+}
+
+.visible {
+  display:block
+}
+.invisible {
+  display: none;
+}

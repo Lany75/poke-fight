@@ -1,0 +1,14 @@
+.nbr-pv {
+  border: solid 1px;
+  width: 200px;
+  font-size: 20px;
+  background-color: greenyellow;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 10px 0px 10px;
+}
+
+#nom-poke {
+  text-align: center;
+}
