@@ -19,7 +19,9 @@ const App = () => {
   const [pokemon2, setPokemon2] = useState(initialStatePokemon);
   const [tour, setTour] = useState(1);
 
-  let numeroPoke1, numeroPoke2, firstPlayer;
+  //let numeroPoke1, numeroPoke2, firstPlayer;
+
+
 
   const getPokemonInfos = (numero, setPokemon) => {
     axios.get(`https://pokeapi.co/api/v2/pokemon/${numero}`)
@@ -36,6 +38,7 @@ const App = () => {
         console.log("vous avez une erreur : ", error);
       });
   }
+
 
 
   const combattre = () => {
@@ -55,6 +58,8 @@ const App = () => {
     }
   }
 
+
+
   const pokeAttack = (attaquant, defenseur, setPokemon) => {
     let attack = (attaquant.attack - defenseur.defense) <= 0 ? 1 : attaquant.attack - defenseur.defense;
     let pv = defenseur.nbrPv - attack;
@@ -72,6 +77,8 @@ const App = () => {
     }
   }
 
+
+
   const pokeMort = (nomPokemon) => {
     const pokemon = document.getElementById(nomPokemon);
     const btnFight = document.getElementById('btn-fight');
@@ -82,13 +89,15 @@ const App = () => {
     pokemon.classList.add('poke-mort');
     btnFight.classList.replace('visible', 'invisible');
     btnReinit.classList.replace('invisible', 'visible');
-    divPv.style.backgroundColor = "red";
+    divPv.style.backgroundColor = "rgb(243, 92, 92)";
     divResultat.textContent = nomPokemon.toUpperCase() + ' a perdu le combat !!!';
   }
 
+
+
   const reinitialiser = () => {
-    numeroPoke1 = Math.floor(Math.random() * Math.floor(151));
-    numeroPoke2 = Math.floor(Math.random() * Math.floor(151));
+    let numeroPoke1 = Math.floor(Math.random() * Math.floor(151));
+    let numeroPoke2 = Math.floor(Math.random() * Math.floor(151));
 
     getPokemonInfos(numeroPoke1, setPokemon1);
     getPokemonInfos(numeroPoke2, setPokemon2);
@@ -114,15 +123,47 @@ const App = () => {
     divResultat.textContent = '';
   }
 
+
+
+
+  /* const nouveuPokemon = () => {
+     let numeroMonPoke = Math.floor(Math.random() * Math.floor(151));
+     getPokemonInfos(numeroMonPoke, setPokemon2);
+ 
+     const btnNvPoke = document.getElementById('nouveau-poke');
+     const divMonPoke = document.getElementById('mon-pokemon');
+     const btnFight = document.getElementById('btn-fight');
+ 
+     console.log(btnNvPoke);
+     console.log(divMonPoke);
+ 
+     btnFight.classList.replace('invisible', 'visible');
+     divMonPoke.classList.replace('invisible', 'visible');
+     btnNvPoke.classList.replace('visible', 'invisible');
+ 
+     console.log(btnNvPoke);
+     console.log(divMonPoke);
+   }
+ */
+
+
+
   React.useEffect(() => {
-    numeroPoke1 = Math.floor(Math.random() * Math.floor(151));
-    numeroPoke2 = Math.floor(Math.random() * Math.floor(151));
-    firstPlayer = Math.floor(Math.random() * Math.floor(2)) === 0 ? "pokemon1" : "pokemon2";
-    console.log(firstPlayer);
+    let numeroPoke1 = Math.floor(Math.random() * Math.floor(151));
+    let numeroPokeAdvers = Math.floor(Math.random() * Math.floor(151));
+
+    //firstPlayer = Math.floor(Math.random() * Math.floor(2)) === 0 ? "pokemon1" : "pokemon2";
+
 
     getPokemonInfos(numeroPoke1, setPokemon1);
-    getPokemonInfos(numeroPoke2, setPokemon2);
+    getPokemonInfos(numeroPokeAdvers, setPokemon2);
+
+    //console.log(pokemon1, pokemon2);
+
+    //setPokemonAttaquant(firstPlayer === "pokemon1" ? pokemon1.name : pokemon2.name);
   }, []);
+
+
 
   return (
     <div className="App">
@@ -131,12 +172,15 @@ const App = () => {
         <div id='mon-pokemon'>
           <Pokemon pokemon={pokemon1} />
         </div>
+        {/*<div id='nouveau-poke' className="visible">
+          <Button variant="outlined" onClick={nouveuPokemon}>Nouveau Pokemon</Button>
+        </div>*/}
         <div id='pokemon-adversaire'>
           <Pokemon pokemon={pokemon2} />
         </div>
       </div>
       <div id='btn-fight' className="visible">
-        <Button className="visible" variant="outlined" color="secondary" onClick={combattre}>Fight !!</Button>
+        <Button variant="outlined" color="secondary" onClick={combattre}>Fight !!</Button>
       </div>
       <div id='btn-reinit' className="invisible">
         <Button variant="outlined" color="primary" onClick={reinitialiser}>Reinitialiser</Button>

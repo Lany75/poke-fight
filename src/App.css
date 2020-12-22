@@ -24,3 +24,9 @@
   font-size: 30px;
 }
 
+#nouveau-poke {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
