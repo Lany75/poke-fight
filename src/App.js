@@ -10,7 +10,8 @@ const initialStatePokemon = {
   attack: 0,
   defense: 0,
   nbrPv: 0,
-  photo: ""
+  photo: "",
+  nbrPvInitial: 0
 }
 
 
@@ -31,7 +32,8 @@ const App = () => {
           attack: reponse.data.stats[1].base_stat,
           defense: reponse.data.stats[2].base_stat,
           nbrPv: reponse.data.stats[0].base_stat,
-          photo: reponse.data.sprites.other.dream_world.front_default
+          photo: reponse.data.sprites.other.dream_world.front_default,
+          nbrPvInitial: reponse.data.stats[0].base_stat,
         })
       })
       .catch(error => {
@@ -69,12 +71,27 @@ const App = () => {
       attack: defenseur.attack,
       defense: defenseur.defense,
       nbrPv: pv > 0 ? pv : "KO",
-      photo: defenseur.photo
+      photo: defenseur.photo,
+      nbrPvInitial: defenseur.nbrPvInitial
     });
+
+    modifBarrePv(defenseur, pv > 0 ? pv : "KO");
 
     if (pv <= 0) {
       pokeMort(defenseur.nom)
     }
+  }
+
+  const modifBarrePv = (pokemon, pv) => {
+
+    const divVieActuel = document.getElementById('vie-actuel-' + pokemon.nom);
+    const divViePerdu = document.getElementById('vie-perdue-' + pokemon.nom);
+
+    let tailleDiv = Math.trunc((pv * 100) / pokemon.nbrPvInitial);
+    tailleDiv = tailleDiv >= 0 ? tailleDiv : 0;
+
+    divVieActuel.style.width = `${tailleDiv}%`;
+    divViePerdu.style.width = `${100 - tailleDiv}%`;;
   }
 
 
@@ -83,13 +100,11 @@ const App = () => {
     const pokemon = document.getElementById(nomPokemon);
     const btnFight = document.getElementById('btn-fight');
     const btnReinit = document.getElementById('btn-reinit');
-    const divPv = document.getElementById('pv' + nomPokemon);
     const divResultat = document.getElementById('resultat');
 
     pokemon.classList.add('poke-mort');
     btnFight.classList.replace('visible', 'invisible');
     btnReinit.classList.replace('invisible', 'visible');
-    divPv.style.backgroundColor = "rgb(243, 92, 92)";
     divResultat.textContent = nomPokemon.toUpperCase() + ' a perdu le combat !!!';
   }
 
@@ -112,15 +127,20 @@ const App = () => {
       imgsPoke[i].classList.remove('poke-mort');
     }
 
-    const divsPv = document.getElementsByClassName('nbr-pv');
-    for (let i = 0; i < imgsPoke.length; i++) {
-      divsPv[i].style.backgroundColor = "greenyellow";
-    }
-
     setTour(1);
 
     const divResultat = document.getElementById('resultat');
     divResultat.textContent = '';
+
+    const divPVActuel = document.getElementsByClassName('point-vie-actuel');
+    const divPVPerdu = document.getElementsByClassName('point-vie-perdue');
+    for (let i = 0; i < divPVActuel.length; i++) {
+      divPVActuel[i].style.width = '100%';
+    }
+    for (let i = 0; i < divPVPerdu.length; i++) {
+      divPVPerdu[i].style.width = '0%';
+    }
+
   }
 
 

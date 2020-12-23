@@ -20,3 +20,7 @@
 .invisible {
   display: none;
 }
+
+#nom-poke {
+  text-align: center;
+}

@@ -2,11 +2,16 @@ import React from 'react';
 import './PointVie.css';
 
 const PointVie = ({ pokemon }) => {
-  const idPoke = "pv" + pokemon.nom;
+
+  const idVieActuel = 'vie-actuel-' + pokemon.nom;
+  const idViePerdue = 'vie-perdue-' + pokemon.nom;
+
   return (
-    <div className='nbr-pv' id={idPoke}>
-      <div>PV</div>
-      <div>{pokemon.nbrPv}</div>
+    <div className='nbr-pv' >
+
+      <div className='point-vie-actuel' id={idVieActuel}></div>
+      <div className='point-vie-perdue' id={idViePerdue}></div>
+
     </div >
   )
 }
